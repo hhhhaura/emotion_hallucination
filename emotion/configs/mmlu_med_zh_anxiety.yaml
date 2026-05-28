@@ -1,0 +1,15 @@
+split: test
+stimulus: anxiety
+stimulus_language: zh
+output_path: outputs/mmlu_med_zh_anxiety.jsonl
+vllm_config: vllm_config/qwen3-1.7B-chat.yaml
+
+N: 50
+max_new_tokens: 128
+temperature: 0.7
+top_p: 0.95
+top_k: 20
+
+limit_problems: null
+seed: null
+enable_thinking: false

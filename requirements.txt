@@ -1,0 +1,16 @@
+datasets
+evaluate
+httpx
+matplotlib
+openai
+pandas
+pylatexenc
+pydantic
+pyyaml
+requests
+scikit-learn
+sympy
+torch
+tqdm
+transformers
+vllm
