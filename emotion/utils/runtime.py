@@ -40,7 +40,13 @@ def build_argparser(default_config_path: str, description: str) -> argparse.Argu
         "--stimulus",
         type=str,
         default=None,
-        help="Emotion stimulus id from stimuli.yaml (overrides config).",
+        help="Emotion stimulus id from the selected stimulus catalog (overrides config).",
+    )
+    parser.add_argument(
+        "--stimulus-config",
+        type=str,
+        default=None,
+        help="Path to stimulus catalog YAML (overrides config).",
     )
     parser.add_argument(
         "--stimulus-language",
@@ -121,6 +127,8 @@ def apply_runner_cli_overrides(cfg: RunnerConfig, args: argparse.Namespace, conf
     updates: dict[str, Any] = {}
     if getattr(args, "stimulus", None) is not None:
         updates["stimulus"] = str(args.stimulus)
+    if getattr(args, "stimulus_config", None) is not None:
+        updates["stimulus_config"] = resolve_config_path(str(args.stimulus_config), config_yaml_path=config_yaml_path)
     if getattr(args, "stimulus_language", None) is not None:
         updates["stimulus_language"] = str(args.stimulus_language).strip().lower()
     if getattr(args, "output_path", None) is not None:

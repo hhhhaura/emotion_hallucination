@@ -23,7 +23,7 @@ from mcmc_lm.core.lm_core import ChatServerVLLM
 
 
 def main() -> None:
-    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "squad_v2_anxiety.yaml")
+    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "squad_v2.yaml")
     args = build_argparser(default_cfg, "Run SQuAD v2 context retrieval inference.").parse_args()
     configure_experiment_logging()
     log = get_exp_logger("squad_v2")

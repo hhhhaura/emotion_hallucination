@@ -23,7 +23,7 @@ from mcmc_lm.core.lm_core import ChatServerVLLM
 
 
 def main() -> None:
-    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "halluqa_mc_anxiety.yaml")
+    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "halluqa_mc.yaml")
     args = build_argparser(default_cfg, "Run HalluQA multiple-choice hallucination probe.").parse_args()
     configure_experiment_logging()
     log = get_exp_logger("halluqa_mc")

@@ -23,7 +23,7 @@ from mcmc_lm.core.lm_core import ChatServerVLLM
 
 
 def main() -> None:
-    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "mmlu_med_en_anxiety.yaml")
+    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "mmlu_med_en.yaml")
     args = build_argparser(default_cfg, "Run Global-MMLU medical (English) hallucination probe.").parse_args()
     configure_experiment_logging()
     log = get_exp_logger("mmlu_med_en")
@@ -58,6 +58,7 @@ def main() -> None:
 
     for idx, ex in enumerate(tqdm_wrap(examples, total=len(examples), desc="mmlu_med_en")):
         outputs = lm.sample([ex["messages"]] * cfg.N, max_new_tokens=cfg.max_new_tokens)
+        #print(f"Example {idx+1}/{len(examples)} input: {ex['messages']}, first output: {outputs[0]}")
         samples, metrics = grade_mc_samples(outputs, ex["reference"]["correct_letter"])
         wrote_path = append_result_jsonl(
             cfg.output_path,

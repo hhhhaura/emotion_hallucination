@@ -23,7 +23,7 @@ from mcmc_lm.core.lm_core import ChatServerVLLM
 
 
 def main() -> None:
-    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "mmlu_med_zh_anxiety.yaml")
+    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "mmlu_med_zh.yaml")
     args = build_argparser(default_cfg, "Run Global-MMLU medical (Chinese) hallucination probe.").parse_args()
     configure_experiment_logging()
     log = get_exp_logger("mmlu_med_zh")

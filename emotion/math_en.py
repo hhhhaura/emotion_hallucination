@@ -23,7 +23,7 @@ from mcmc_lm.core.lm_core import ChatServerVLLM
 
 
 def main() -> None:
-    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "math_en_aligned_anxiety.yaml")
+    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "math_en.yaml")
     args = build_argparser(default_cfg, "Run English aligned multilingual math inference.").parse_args()
     configure_experiment_logging()
     log = get_exp_logger("math_en_aligned")

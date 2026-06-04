@@ -23,7 +23,7 @@ from mcmc_lm.core.lm_core import ChatServerVLLM
 
 
 def main() -> None:
-    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "cmrc2018_anxiety.yaml")
+    default_cfg = os.path.join(os.path.dirname(__file__), "configs", "cmrc2018.yaml")
     args = build_argparser(default_cfg, "Run CMRC2018 context retrieval inference.").parse_args()
     configure_experiment_logging()
     log = get_exp_logger("cmrc2018")
@@ -53,11 +53,13 @@ def main() -> None:
         cfg.max_new_tokens,
         cfg.split,
         cfg.stimulus,
+        cfg.stimulus_placement,
         cfg.output_path,
     )
 
     for idx, ex in enumerate(tqdm_wrap(examples, total=len(examples), desc="cmrc2018")):
-        outputs = lm.sample([ex["messages"]] * cfg.N, max_new_tokens=cfg.max_new_tokens)
+        continue_final_message = (cfg.stimulus_placement == "assistant_think")
+        outputs = lm.sample([ex["messages"]] * cfg.N, max_new_tokens=cfg.max_new_tokens, continue_final_message=continue_final_message)
         samples, metrics = grade_cmrc_samples(outputs, ex["reference"]["answers"])
         wrote_path = append_result_jsonl(
             cfg.output_path,

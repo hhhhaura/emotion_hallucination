@@ -77,16 +77,30 @@ def apply_stimulus(
         return copy.deepcopy(messages)
 
     out = copy.deepcopy(messages)
-    if placement != "system_suffix":
-        raise ValueError(f"Unsupported stimulus placement: {placement}")
+    #if placement != "system_suffix":
+    #    raise ValueError(f"Unsupported stimulus placement: {placement}")
 
     suffix = f"\n\n{stimulus_text}"
+    prefix = f"{stimulus_text}\n\n"
+    think = f"<think>\n{stimulus_text.replace('你', '我').replace('You', 'I').replace('you', 'I')}\n</think>"
+    is_done = False
     for msg in out:
-        if msg.get("role") == "system":
+        if msg.get("role") == "system" and placement == "system_suffix":
             msg["content"] = str(msg.get("content", "")).rstrip() + suffix
-            return out
-
-    out.insert(0, {"role": "system", "content": stimulus_text.strip()})
+            is_done = True
+            break
+        if msg.get("role") == "user" and placement == "user_prefix":
+            msg["content"] = prefix + str(msg.get("content", "")).rstrip()
+            is_done = True
+            break
+    if not is_done:
+        if placement == "system_suffix":
+            out.insert(0, {"role": "system", "content": stimulus_text.strip()})
+            is_done = True
+        if placement == "assistant_think":
+            out.append({"role": "assistant", "content": think})
+            is_done = True
+    assert is_done, f"Failed to apply stimulus with placement '{placement}'"
     return out
 
 
